@@ -443,7 +443,7 @@
     // Frequency chart
     const freqCtx = document.getElementById('frequencyChart').getContext('2d');
     const frequencyChart = new Chart(freqCtx, {
-      type: 'bar',
+      type: 'pie',
       data: {
         labels: ['1-2 sinnum', '3-5 sinnum', '6+ sinnum'],
         datasets: [{
@@ -494,7 +494,7 @@
     // Reason chart
     const reasonCtx = document.getElementById('reasonChart').getContext('2d');
     const reasonChart = new Chart(reasonCtx, {
-      type: 'bar',
+      type: 'pie',
       data: {
         labels: ['Smekkur', 'Orka', 'Vani', 'Annað'],
         datasets: [{
