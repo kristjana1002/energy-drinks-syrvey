@@ -7,193 +7,259 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: linear-gradient(135deg, #000428, #004e92);
-      color: #e0e0e0;
-      overflow-x: hidden;
-      box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #000428, #004e92);
+        color: #e0e0e0;
+        overflow-x: hidden;
+        box-sizing: border-box;
     }
 
     h1, h2 {
-      text-align: center;
-      font-weight: bold;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: #00bcd4;
-      text-shadow: 0 0 30px #00bcd4, 0 0 60px #00e5ff;
-      font-size: 3rem;
-      margin-top: 0;
+        text-align: center;
+        font-weight: bold;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: #00bcd4;
+        text-shadow: 0 0 30px #00bcd4, 0 0 60px #00e5ff;
+        font-size: 3rem;
+        margin-top: 0;
     }
 
     h2 {
-      font-size: 2rem;
-      color: #4dd0e1;
-      text-shadow: 0 0 25px #00bcd4, 0 0 50px #00e5ff;
+        font-size: 2rem;
+        color: #4dd0e1;
+        text-shadow: 0 0 25px #00bcd4, 0 0 50px #00e5ff;
     }
 
     .filter-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 25px;
-      gap: 15px;
-      animation: fadeIn 0.7s ease-out;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 25px;
+        gap: 15px;
+        animation: fadeIn 0.7s ease-out;
     }
 
     .filter-container select {
-      margin: 0 10px;
-      padding: 15px 30px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 3px solid #00bcd4;
-      color: #ffffff;
-      border-radius: 50px;
-      text-transform: uppercase;
-      font-weight: bold;
-      outline: none;
-      box-shadow: 0 0 15px #00bcd4, 0 0 30px #00e5ff;
-      transition: all 0.4s ease;
-      font-size: 1rem;
+        margin: 0 10px;
+        padding: 15px 30px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 3px solid #00bcd4;
+        color: #ffffff;
+        border-radius: 50px;
+        text-transform: uppercase;
+        font-weight: bold;
+        outline: none;
+        box-shadow: 0 0 15px #00bcd4, 0 0 30px #00e5ff;
+        transition: all 0.4s ease;
+        font-size: 1rem;
     }
 
     .filter-container select:hover {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 20px #00bcd4, 0 0 40px #00e5ff;
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 20px #00bcd4, 0 0 40px #00e5ff;
     }
 
     .filter-container button {
-      padding: 15px 35px;
-      background-color: #00bcd4;
-      color: #ffffff;
-      border: none;
-      border-radius: 50px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1.2rem;
-      box-shadow: 0 0 15px #00bcd4, 0 0 30px #00e5ff;
-      transition: all 0.4s ease;
+        padding: 15px 35px;
+        background-color: #00bcd4;
+        color: #ffffff;
+        border: none;
+        border-radius: 50px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1.2rem;
+        box-shadow: 0 0 15px #00bcd4, 0 0 30px #00e5ff;
+        transition: all 0.4s ease;
     }
 
     .filter-container button:hover {
-      background-color: #4dd0e1;
-      box-shadow: 0 0 25px #4dd0e1, 0 0 45px #00bcd4;
+        background-color: #4dd0e1;
+        box-shadow: 0 0 25px #4dd0e1, 0 0 45px #00bcd4;
     }
 
     .charts-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-      padding: 25px;
-      animation: slideIn 1s ease-in-out;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        padding: 25px;
+        animation: slideIn 1s ease-in-out;
     }
 
     .chart-container {
-      background: linear-gradient(135deg, #2c3e50, #34495e);
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 40px #00bcd4;
-      text-align: center;
-      border: 5px solid #00bcd4;
-      position: relative;
-      animation: chartFadeIn 1.5s ease-out;
-      overflow: hidden;
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 40px #00bcd4;
+        text-align: center;
+        border: 5px solid #00bcd4;
+        position: relative;
+        animation: chartFadeIn 1.5s ease-out;
+        overflow: hidden;
     }
 
     .chart-container:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 50px #00bcd4, 0 0 80px #00e5ff;
+        transform: scale(1.03);
+        box-shadow: 0 0 50px #00bcd4, 0 0 80px #00e5ff;
     }
 
     .chart-container:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.4));
-      pointer-events: none;
-      z-index: 1;
-      border-radius: 15px;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.4));
+        pointer-events: none;
+        z-index: 1;
+        border-radius: 15px;
     }
 
     canvas {
-      max-width: 100%;
-      height: auto;
-      border-radius: 15px;
-      z-index: 2;
-      position: relative;
+        max-width: 100%;
+        height: auto;
+        border-radius: 15px;
+        z-index: 2;
+        position: relative;
+    }
+
+    /* Text in charts */
+    .chart-container canvas {
+        position: relative;
+        z-index: 2;
+    }
+
+    .chart-container .chart-title {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 1.5rem;
+        color: #ffffff;
+        font-weight: bold;
+        text-shadow: 0 0 15px rgba(0, 188, 212, 0.9);
+        z-index: 10;
+    }
+
+    .chart-container .chart-text {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-size: 1rem;
+        color: #ffffff;
+        font-weight: bold;
+        text-shadow: 0 0 15px rgba(0, 188, 212, 0.7);
+        z-index: 10;
     }
 
     footer {
-      background-color: #1a2a33;
-      padding: 25px;
-      text-align: center;
-      color: #ffffff;
-      font-size: 1.2rem;
-      border-top: 3px solid #00bcd4;
-      margin-top: 40px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+        background-color: #1a2a33;
+        padding: 25px;
+        text-align: center;
+        color: #ffffff;
+        font-size: 1.2rem;
+        border-top: 3px solid #00bcd4;
+        margin-top: 40px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
     }
 
     footer a {
-      color: #00bcd4;
-      text-decoration: none;
-      font-weight: bold;
-      letter-spacing: 2px;
-      transition: color 0.3s ease;
+        color: #00bcd4;
+        text-decoration: none;
+        font-weight: bold;
+        letter-spacing: 2px;
+        transition: color 0.3s ease;
     }
 
     footer a:hover {
-      color: #4dd0e1;
-      text-decoration: underline;
+        color: #4dd0e1;
+        text-decoration: underline;
     }
 
     /* Animations */
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes slideIn {
-      0% { opacity: 0; transform: translateX(-40px); }
-      100% { opacity: 1; transform: translateX(0); }
+        0% { opacity: 0; transform: translateX(-40px); }
+        100% { opacity: 1; transform: translateX(0); }
     }
 
     @keyframes chartFadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
     }
 
     /* Media Queries for responsiveness */
     @media (max-width: 1200px) {
-      .charts-grid {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 20px;
-      }
+        .charts-grid {
+            grid-template-columns: repeat(2, 1fr);
+            padding: 20px;
+        }
     }
 
     @media (max-width: 768px) {
-      .charts-grid {
-        grid-template-columns: 1fr;
-        padding: 20px;
-      }
+        .charts-grid {
+            grid-template-columns: 1fr;
+            padding: 20px;
+        }
 
-      h1 {
-        font-size: 2.5rem;
-      }
+        h1 {
+            font-size: 2.5rem;
+        }
 
-      h2 {
-        font-size: 1.8rem;
-      }
+        h2 {
+            font-size: 1.8rem;
+        }
 
-      .filter-container select,
-      .filter-container button {
+        .filter-container select,
+        .filter-container button {
+            font-size: 1rem;
+            padding: 12px 25px;
+        }
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        margin: 30px 0;
+        border-collapse: collapse;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 188, 212, 0.4);
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: center;
         font-size: 1rem;
-        padding: 12px 25px;
-      }
+        color: #fff;
+        border-bottom: 2px solid #00bcd4;
+    }
+
+    th {
+        background-color: #00bcd4;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: rgba(0, 188, 212, 0.3);
+    }
+
+    img {
+        display: block;
+        margin: 20px auto;
+        width: 80%;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0, 188, 212, 0.6);
     }
 </style>
+
 
 
 
@@ -462,6 +528,115 @@
     });
   </script>
 
+
+
+    <header>
+        <h1>Rannsókn á Orkudrykkjaneyslu</h1>
+        <p><em>Greining á notkun og viðhorfum til orkudrykkja.</em></p>
+    </header>
+    <section>
+        <h2>Kynning</h2>
+        <p>Þessi rannsókn fjallar um neyslu og skoðanir fólks á orkudrykkjum. Sérstaklega var lögð áhersla á aldur, kyn, vinsælustu tegundir og hvar orkudrykkir eru helst drukknir. Gögnin voru fengin með spurningalista sem lagður var fyrir 20 einstaklinga á aldrinum 15-30 eldri</p>
+        <h2>Markmið rannsóknar</h2>
+        <p>Markmiðið var að skilja neyslumynstur orkudrykkja með því að skoða eftirfarandi þætti:</p>
+        <ul>
+            <li>Aldur þátttakenda.</li>
+            <li>Kyn þátttakenda.</li>
+            <li>Neyslutíðni orkudrykkja.</li>
+            <li>Vinsælustu tegundir orkudrykkja.</li>
+            <li>Ástæður fyrir neyslu.</li>
+            <li>Hvar orkudrykkir eru helst neytt.</li>
+        </ul>
+        <p>Ef þú vilt vita meira um Orkudrykki <a href="https://en.wikipedia.org/wiki/Energy_drink" target="_blank">þessari síðu</a>.</p>
+
+        <h2>Helstu niðurstöður</h2>
+        <p>Hér er samantekt á helstu niðurstöðum rannsóknarinnar:</p>
+        <ul>
+            <li><strong>Aldur:</strong> Flestir þátttakendur voru á aldrinum 15-20 ára.</li>
+            <li><strong>Kyn:</strong> Kynjahlutfall var nánast jafnt með lítilli þátttöku frá öðrum kynjum.</li>
+            <li><strong>Neyslutíðni:</strong> Þátttakendur drukku orkudrykki að meðaltali 3,7 sinnum í viku.</li>
+            <li><strong>Tegundir:</strong> Monster var vinsælasti drykkurinn (40%), en Red Bull og Nocco fylgdu á eftir.</li>
+            <li><strong>Ástæður:</strong> Smekkur (45%) og orka (35%) voru algengustu ástæður fyrir neyslu.</li>
+            <li><strong>Staðsetning:</strong> Flestir drukku orkudrykki í skólanum (50%), en sumir einnig eftir skóla.</li>
+        </ul>
+
+        <h2>Sundurliðun gagna</h2>
+        <p>Sundurliðunin veitir betri innsýn í hvernig neyslumynstur og val tengjast aldri og kyni þátttakenda:</p>
+        <h3>Hversu oft drekkur þú orkudrykki á viku?</h3>
+        <table border="1" style="width:100%; text-align:left; margin-bottom:20px;">
+            <thead>
+                <tr>
+                    <th>Aldurshópur</th>
+                    <th>Kyn</th>
+                    <th>1-2 sinnum</th>
+                    <th>3-5 sinnum</th>
+                    <th>6+ sinnum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 15-17 ára -->
+                <tr>
+                    <td rowspan="3">15-17 ára</td>
+                    <td>Kona</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Karl</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Annað</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <!-- 18-20 ára -->
+                <tr>
+                    <td rowspan="3">18-20 ára</td>
+                    <td>Kona</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Karl</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Annað</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <!-- 21 ára og eldri -->
+                <tr>
+                    <td rowspan="2">21 ára og eldri</td>
+                    <td>Kona</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Karl</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Hvaða tegund af orkudrykkjum kýstu helst?</h3>
+        <p>Monster var valinn mest af öllum hópum, sérstaklega yngri þátttakendum. Red Bull og Nocco voru einnig vinsælir.</p>
+        <h2>Ályktanir</h2>
+        <p>Rannsóknin sýnir að neyslumynstur orkudrykkja er sterkt tengt aldri og kyni. Monster er yfirburðavinsælasti orkudrykkurinn, og skóli er algengasti staðurinn til neyslu. Gögnin veita grunn fyrir frekari rannsóknir eða viðskiptaáætlanir fyrir orkudrykkjaframleiðendur.</p>
+    </section>
+ 
   <footer>
     <p>© 2025 Skilaverkefni - made by Rawan Kristjana, Helen Giang, Nga Thi and Elín Katrín <a href="#">Höfundarréttur</a></p>
   </footer>
