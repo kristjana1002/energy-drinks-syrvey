@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orkudrykkjakönnun - Niðurstöður</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: radial-gradient(circle, #121212, #0d0d0d);
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    h1, h2 {
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ff4081;
+      text-shadow: 0 0 20px #ff4081, 0 0 30px #ff6f91;
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+
+    .filter-container select {
+      margin: 0 10px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #ff4081;
+      color: #ffffff;
+      border-radius: 25px;
+      text-transform: uppercase;
+      font-weight: bold;
+      outline: none;
+      box-shadow: 0 0 10px #ff4081, 0 0 20px #ff6f91;
+      transition: all 0.3s ease;
+    }
+
+    .filter-container select:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .filter-container button {
+      padding: 10px 30px;
+      background-color: #ff4081;
+      color: #ffffff;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-container button:hover {
+      background-color: #ff6f91;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .chart-container {
+      background: linear-gradient(135deg, #333, #444);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px #ff4081;
+      text-align: center;
+      transform: scale(1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .chart-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px #ff4081, 0 0 70px #ff6f91;
+    }
+
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+
+    footer {
+      background-color: #222;
+      padding: 20px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      border-top: 2px solid #ff4081;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #ff4081;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Orkudrykkjakönnun</h1>
+  <h2>Upplýsingar sem tala til þín</h2>
+  
+  <!-- Síuvalkostir -->
+  <div class="filter-container">
+    <select id="age-filter">
+      <option value="all">Allir aldurshópar</option>
+      <option value="15-17">15-17 ára</option>
+      <option value="18-20">18-20 ára</option>
+      <option value="21+">21 ára og eldri</option>
+    </select>
+    <select id="gender-filter">
+      <option value="all">Öll kyn</option>
+      <option value="female">Konur</option>
+      <option value="male">Karlar</option>
+      <option value="other">Annað</option>
+    </select>
+    <button id="filter-btn">Staðfesta Síur</button>
+  </div>
+
+  <!-- Svæði fyrir kökurit -->
+  <div class="charts-grid">
+    <div class="chart-container">
+      <canvas id="ageChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="genderChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="frequencyChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="preferenceChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="reasonChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="locationChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // Mock survey data
+    const surveyData = {
+      all: {
+        age: { "15-17": 40, "18-20": 40, "21+": 20 },
+        gender: { female: 50, male: 45, other: 5 },
+        frequency: { "1-2 sinnum": 40, "3-5 sinnum": 35, "6+ sinnum": 25 },
+        preference: { Monster: 40, "Red Bull": 25, Nocco: 20, Collab: 10, Annað: 5 },
+        reason: { Smekkur: 45, Orka: 35, Vani: 15, Annað: 5 },
+        location: { "Í skólanum": 50, "Eftir skóla": 30, "Bæði": 20 }
+      },
+      female: {
+        "15-17": { frequency: { "1-2 sinnum": 45, "3-5 sinnum": 30, "6+ sinnum": 25 }, preference: { Monster: 45, "Red Bull": 30, Nocco: 15, Collab: 5 }, reason: { Smekkur: 40, Orka: 40, Vani: 15, Annað: 5 }},
+        "18-20": { frequency: { "1-2 sinnum": 40, "3-5 sinnum": 40, "6+ sinnum": 20 }, preference: { Monster: 50, "Red Bull": 30, Nocco: 10, Collab: 5 }, reason: { Smekkur: 50, Orka: 30, Vani: 15, Annað: 5 }},
+        "21+": { frequency: { "1-2 sinnum": 35, "3-5 sinnum": 45, "6+ sinnum": 20 }, preference: { Monster: 40, "Red Bull": 30, Nocco: 15, Collab: 10 }, reason: { Smekkur: 45, Orka: 40, Vani: 10, Annað: 5 }},
+      },
+      male: {
+        "15-17": { frequency: { "1-2 sinnum": 50, "3-5 sinnum": 35, "6+ sinnum": 15 }, preference: { Monster: 60, "Red Bull": 25, Nocco: 10, Collab: 5 }, reason: { Smekkur: 50, Orka: 35, Vani: 10, Annað: 5 }},
+        "18-20": { frequency: { "1-2 sinnum": 45, "3-5 sinnum": 40, "6+ sinnum": 15 }, preference: { Monster: 55, "Red Bull": 30, Nocco: 10, Collab: 5 }, reason: { Smekkur: 50, Orka: 40, Vani: 5, Annað: 5 }},
+        "21+": { frequency: { "1-2 sinnum": 30, "3-5 sinnum": 50, "6+ sinnum": 20 }, preference: { Monster: 50, "Red Bull": 30, Nocco: 10, Collab: 10 }, reason: { Smekkur: 55, Orka: 35, Vani: 5, Annað: 5 }},
+      },
+      other: {
+        "15-17": { frequency: { "1-2 sinnum": 40, "3-5 sinnum": 40, "6+ sinnum": 20 }, preference: { Monster: 30, "Red Bull": 35, Nocco: 20, Collab: 10 }, reason: { Smekkur: 35, Orka: 40, Vani: 15, Annað: 10 }},
+        "18-20": { frequency: { "1-2 sinnum": 35, "3-5 sinnum": 45, "6+ sinnum": 20 }, preference: { Monster: 25, "Red Bull": 50, Nocco: 15, Collab: 10 }, reason: { Smekkur: 40, Orka: 40, Vani: 15, Annað: 5 }},
+        "21+": { frequency: { "1-2 sinnum": 50, "3-5 sinnum": 40, "6+ sinnum": 10 }, preference: { Monster: 30, "Red Bull": 40, Nocco: 20, Collab: 10 }, reason: { Smekkur: 45, Orka: 40, Vani: 10, Annað: 5 }},
+      }
+    };
+
+    const neonColors = ["#ff4081", "#ff6f91", "#ff8fb1", "#ffabc2", "#ffe4e1"];
+    const chartOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            color: "#ffffff"
+          }
+        }
+      }
+    };
+
+    // Function to update charts with filtered data
+    function updateCharts(filteredData) {
+      const datasets = {
+        age: {
+          labels: ["15-17 ára", "18-20 ára", "21+ ára"],
+          data: [filteredData.age["15-17"], filteredData.age["18-20"], filteredData.age["21+"]]
+        },
+        gender: {
+          labels: ["Konur", "Karlar", "Annað"],
+          data: [filteredData.gender.female, filteredData.gender.male, filteredData.gender.other]
+        },
+        frequency: {
+          labels: ["1-2 sinnum", "3-5 sinnum", "6+ sinnum"],
+          data: [filteredData.frequency["1-2 sinnum"], filteredData.frequency["3-5 sinnum"], filteredData.frequency["6+ sinnum"]]
+        },
+        preference: {
+          labels: ["Monster", "Red Bull", "Nocco", "Collab", "Annað"],
+          data: [filteredData.preference.Monster, filteredData.preference["Red Bull"], filteredData.preference.Nocco, filteredData.preference.Collab, filteredData.preference.Annað]
+        },
+        reason: {
+          labels: ["Smekkur", "Orka", "Vani", "Annað"],
+          data: [filteredData.reason.Smekkur, filteredData.reason.Orka, filteredData.reason.Vani, filteredData.reason.Annað]
+        },
+        location: {
+          labels: ["Í skólanum", "Eftir skóla", "Bæði"],
+          data: [filteredData.location["Í skólanum"], filteredData.location["Eftir skóla"], filteredData.location["Bæði"]]
+        }
+      };
+
+      // Update each chart
+      Object.keys(datasets).forEach(key => {
+        new Chart(document.getElementById(`${key}Chart`), {
+          type: "pie",
+          data: {
+            labels: datasets[key].labels,
+            datasets: [{
+              data: datasets[key].data,
+              backgroundColor: neonColors,
+            }]
+          },
+          options: chartOptions
+        });
+      });
+    }
+
+    // Event listener for filter button
+    document.getElementById("filter-btn").addEventListener("click", function() {
+      const selectedAge = document.getElementById("age-filter").value;
+      const selectedGender = document.getElementById("gender-filter").value;
+
+      let filteredData = surveyData.all;
+      console.log("Before filtering:", filteredData);
+
+      // Apply gender filter
+      if (selectedGender !== "all") {
+        filteredData = surveyData[selectedGender];
+        console.log(`Filtered by gender: ${selectedGender}`, filteredData);
+      }
+
+      // Apply age filter
+      if (selectedAge !== "all") {
+        filteredData = filteredData[selectedAge] || filteredData;
+        console.log(`Filtered by age: ${selectedAge}`, filteredData);
+      }
+
+      updateCharts(filteredData);
+    });
+
+    // Initial load with all data
+    updateCharts(surveyData.all);
+  </script>
+
+  <footer>
+    <p>Verkefnið var unnið af: <span style="font-weight: bold;">Rawan Kristjana</span> 
+       <span style="font-weight: bold;">Nga</span>, <span style="font-weight: bold;">Helen</span>, 
+       <span style="font-weight: bold;">Elín</span> og <span style="font-weight: bold;"></p>
+    <p>Verkefnið byggir á orkudrykkjakönnun sem tók til mismunandi aldurshópa og kynjahlutfalla.</p>
+  </footer>
+</body>
+</html>
