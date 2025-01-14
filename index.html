@@ -10,102 +10,176 @@
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 20px;
-      background: radial-gradient(circle, #121212, #0d0d0d);
-      color: #ffffff;
+      background: linear-gradient(135deg, #000428, #004e92);
+      color: #e0e0e0;
       overflow-x: hidden;
+      box-sizing: border-box;
     }
 
     h1, h2 {
       text-align: center;
       font-weight: bold;
-      letter-spacing: 2px;
+      letter-spacing: 6px;
       text-transform: uppercase;
-      color: #ff4081;
-      text-shadow: 0 0 20px #ff4081, 0 0 30px #ff6f91;
+      color: #00bcd4;
+      text-shadow: 0 0 40px #00bcd4, 0 0 80px #00e5ff, 0 0 120px #00bcd4;
+      font-size: 4rem;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #4dd0e1;
+      text-shadow: 0 0 30px #00bcd4, 0 0 60px #00e5ff;
     }
 
     .filter-container {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       gap: 20px;
+      animation: fadeIn 0.7s ease-out;
     }
 
     .filter-container select {
-      margin: 0 10px;
-      padding: 10px 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #ff4081;
+      margin: 0 15px;
+      padding: 18px 35px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 3px solid #00bcd4;
       color: #ffffff;
-      border-radius: 25px;
+      border-radius: 50px;
       text-transform: uppercase;
       font-weight: bold;
       outline: none;
-      box-shadow: 0 0 10px #ff4081, 0 0 20px #ff6f91;
-      transition: all 0.3s ease;
+      box-shadow: 0 0 20px #00bcd4, 0 0 40px #00e5ff;
+      transition: all 0.4s ease;
+      font-size: 1.1rem;
     }
 
     .filter-container select:hover {
       background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 25px #00bcd4, 0 0 50px #00e5ff;
     }
 
     .filter-container button {
-      padding: 10px 30px;
-      background-color: #ff4081;
+      padding: 18px 45px;
+      background-color: #00bcd4;
       color: #ffffff;
       border: none;
-      border-radius: 25px;
+      border-radius: 50px;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s ease;
+      font-size: 1.3rem;
+      box-shadow: 0 0 20px #00bcd4, 0 0 40px #00e5ff;
+      transition: all 0.4s ease;
     }
 
     .filter-container button:hover {
-      background-color: #ff6f91;
+      background-color: #4dd0e1;
+      box-shadow: 0 0 35px #4dd0e1, 0 0 60px #00bcd4;
     }
 
     .charts-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      padding: 20px;
+      gap: 35px;
+      padding: 35px;
+      animation: slideIn 1s ease-in-out;
     }
 
     .chart-container {
-      background: linear-gradient(135deg, #333, #444);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px #ff4081;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      padding: 50px;
+      border-radius: 25px;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 50px #00bcd4;
       text-align: center;
       transform: scale(1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease-in-out;
+      border: 5px solid #00bcd4;
+      animation: chartFadeIn 1.5s ease-out;
     }
 
     .chart-container:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 50px #ff4081, 0 0 70px #ff6f91;
+      box-shadow: 0 0 70px #00bcd4, 0 0 100px #00e5ff;
     }
 
     canvas {
       max-width: 100%;
       height: auto;
+      border-radius: 15px;
     }
 
     footer {
-      background-color: #222;
-      padding: 20px;
+      background-color: #1a2a33;
+      padding: 35px;
       text-align: center;
       color: #ffffff;
-      font-size: 14px;
-      border-top: 2px solid #ff4081;
-      margin-top: 40px;
+      font-size: 1.3rem;
+      border-top: 3px solid #00bcd4;
+      margin-top: 60px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
     }
 
     footer a {
-      color: #ff4081;
+      color: #00bcd4;
       text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 2px;
+      transition: color 0.3s ease;
     }
-  </style>
+
+    footer a:hover {
+      color: #4dd0e1;
+      text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateX(-50px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes chartFadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 1200px) {
+      .charts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+        padding: 25px;
+      }
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .filter-container select,
+      .filter-container button {
+        font-size: 1.1rem;
+        padding: 14px 28px;
+      }
+    }
+</style>
+
 </head>
 <body>
   <h1>Skilaverkefni - Könnun C</h1>
