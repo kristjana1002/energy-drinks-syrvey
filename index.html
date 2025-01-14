@@ -392,7 +392,7 @@
         labels: ['15-17 ára', '18-20 ára', '21+'],
         datasets: [{
           data: Object.values(surveyData.all.age),
-          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'],
+          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'], // Pie slices colors
         }]
       },
       options: {
@@ -400,45 +400,53 @@
         plugins: {
           legend: {
             position: 'top',
+            labels: {
+              color: '#ffffff', // White color for legend text
+            },
           },
           tooltip: {
             callbacks: {
               label: function(tooltipItem) {
-                return tooltipItem.raw + "%";
+                return tooltipItem.raw + "%"; // Show percentage in tooltip
               }
             }
           }
         }
       }
     });
+    
 
     // Gender chart
     const genderCtx = document.getElementById('genderChart').getContext('2d');
-    const genderChart = new Chart(genderCtx, {
-      type: 'pie',
-      data: {
-        labels: ['Konur', 'Karlar', 'Annað'],
-        datasets: [{
-          data: Object.values(surveyData.all.gender),
-          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'],
-        }]
+const genderChart = new Chart(genderCtx, {
+  type: 'pie',
+  data: {
+    labels: ['Konur', 'Karlar', 'Annað'],
+    datasets: [{
+      data: Object.values(surveyData.all.gender),
+      backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'], // Pie slices colors
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          color: '#ffffff', // White color for legend text
+        },
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            callbacks: {
-              label: function(tooltipItem) {
-                return tooltipItem.raw + "%";
-              }
-            }
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return tooltipItem.raw + "%"; // Show percentage in tooltip
           }
         }
       }
-    });
+    }
+  }
+});
+
 
     // Frequency chart
     const freqCtx = document.getElementById('frequencyChart').getContext('2d');
@@ -449,83 +457,7 @@
         datasets: [{
           label: 'Heildar tíðni',
           data: Object.values(surveyData.all.frequency),
-          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'],
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(tooltipItem) {
-                return tooltipItem.raw + "%";
-              }
-            }
-          }
-        }
-      }
-    });
-
-    // Preferences chart
-    const prefCtx = document.getElementById('preferenceChart').getContext('2d');
-    const preferenceChart = new Chart(prefCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Monster', 'Red Bull', 'Nocco', 'Collab', 'Annað'],
-        datasets: [{
-          data: Object.values(surveyData.all.preference),
-          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5', '#ff5599', '#ff7d99'],
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(tooltipItem) {
-                return tooltipItem.raw + "%";
-              }
-            }
-          }
-        }
-      }
-    });
-
-    // Reason chart
-    const reasonCtx = document.getElementById('reasonChart').getContext('2d');
-    const reasonChart = new Chart(reasonCtx, {
-      type: 'pie',
-      data: {
-        labels: ['Smekkur', 'Orka', 'Vani', 'Annað'],
-        datasets: [{
-          label: 'Ástæður fyrir neyslu',
-          data: Object.values(surveyData.all.reason),
-          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5', '#ff5599'],
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(tooltipItem) {
-                return tooltipItem.raw + "%";
-              }
-            }
-          }
-        }
-      }
-    });
-
-    // Location chart
-    const locCtx = document.getElementById('locationChart').getContext('2d');
-    const locationChart = new Chart(locCtx, {
-      type: 'pie',
-      data: {
-        labels: ['Í skólanum', 'Eftir skóla', 'Bæði'],
-        datasets: [{
-          data: Object.values(surveyData.all.location),
-          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'],
+          backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'], // Pie slices colors
         }]
       },
       options: {
@@ -533,17 +465,118 @@
         plugins: {
           legend: {
             position: 'top',
+            labels: {
+              color: '#ffffff', // White color for legend text
+            },
           },
           tooltip: {
             callbacks: {
               label: function(tooltipItem) {
-                return tooltipItem.raw + "%";
+                return tooltipItem.raw + "%"; // Show percentage in tooltip
               }
             }
           }
         }
       }
     });
+    
+
+    // Preferences chart
+    // Preferences chart
+const prefCtx = document.getElementById('preferenceChart').getContext('2d');
+const preferenceChart = new Chart(prefCtx, {
+  type: 'pie',
+  data: {
+    labels: ['Monster', 'Red Bull', 'Nocco', 'Collab', 'Annað'],
+    datasets: [{
+      data: Object.values(surveyData.all.preference),
+      backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5', '#ff5599', '#ff7d99'], // Pie slices colors
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return tooltipItem.raw + "%"; // Add percentage to tooltip
+          }
+        }
+      },
+      legend: {
+        position: 'top', // Position the legend at the top
+        labels: {
+          color: '#ffffff', // Change legend text color
+        },
+      },
+    },
+  }
+});
+
+
+    // Reason chart
+    const reasonCtx = document.getElementById('reasonChart').getContext('2d');
+const reasonChart = new Chart(reasonCtx, {
+  type: 'pie',
+  data: {
+    labels: ['Smekkur', 'Orka', 'Vani', 'Annað'],
+    datasets: [{
+      label: 'Ástæður fyrir neyslu',
+      data: Object.values(surveyData.all.reason),
+      backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5', '#ff5599'], // Pie slices colors
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return tooltipItem.raw + "%"; // Show percentage in tooltip
+          }
+        }
+      },
+      legend: {
+        position: 'top', // Position the legend at the top
+        labels: {
+          color: '#ffffff', // Change the legend text color (dark gray here)
+        },
+      },
+    },
+  }
+});
+
+    // Location chart
+    const locCtx = document.getElementById('locationChart').getContext('2d');
+const locationChart = new Chart(locCtx, {
+  type: 'pie',
+  data: {
+    labels: ['Í skólanum', 'Eftir skóla', 'Bæði'],
+    datasets: [{
+      data: Object.values(surveyData.all.location),
+      backgroundColor: ['#ff4081', '#ff6f91', '#ff80b5'], // Pie slices colors
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          color: '#ffffff', // White color for legend text
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return tooltipItem.raw + "%"; // Show percentage in tooltip
+          }
+        }
+      }
+    }
+  }
+});
+
 
     // Apply filters to all charts based on the selected options
     document.getElementById('filter-btn').addEventListener('click', function() {
